@@ -25,57 +25,62 @@
       <div class="col-md-12">
         <h1 class="mb-4">My Wishlist</h1>
         <hr>
-
-        {% if wishlist_items %}
-        <div class="row">
-          {% for item in wishlist_items %}
-          <div class="col-md-3">
-            <div class="card shadow product_data">
-              <div class="card-body">
-                <div class="img-container">
-                  <img src="{{ item.product.product_image.url }}" alt="{{ item.product.name }}">
-                </div>
-                <div class="mt-3">
-                  <h5>{{ item.product.name }}</h5>
-                  <p class="text-muted
+        <div class="card shadow">
+          <div class="card-body wish-data">
+            {% if wishlist_items %}
+            {% for item in wishlist_items %}
+            <div class="row product_data">
+              <div class="col-md-2 my-auto">
+                <img src="{{ item.product.product_image.url }}" height="70px" width="80px"
+                  alt="{{ item.product.name }}">
+              </div>
+              <div class="col-md-3 my-auto">
+                <h5>{{ item.product.name }}</h5>
+                <p class="text-muted
                   ">{{ item.product.category.name }}</p>
-                  <hr>
-                  <div>
-                    <h3 class="text-muted
-                    text-decoration-line-through">&#8377; {{ item.product.original_price }}</h3>
-                    <h3 class="text-danger">&#8377; {{ item.product.discount_price }}</h3>
-                  </div>
-                  <hr>
-                  <div>
-                    {% if item.product.quantity > 0 %}
-                    <label class="badge bg-success">In Stock</label>
-                    {% else %}
-                    <label class="badge bg-danger">Out of Stock</label>
-                    {% endif %}
-                  </div>
-                  <hr>
-                  <div class="d-flex justify-content-between">
-                    <a href="" class="btn btn-sm btn-primary">View</a>
-                    <button class="btn btn-sm btn-danger remove_wishlist" data-id="{{ item.id }}">Remove</button>
+                  {% if item.product.quantity > 0 %}
+                  <p class="text-success">In Stock</p>
+                  {% else %}
+                  <p class="text-danger">Out of Stock</p>
+                  {% endif %}
 
-                  </div>
-                </div>
+              </div>
+              <div class="col-md-2 my-auto">
+                <h6 class="text-muted
+                    text-decoration-line-through">&#8377; {{ item.product.original_price }}</h6>
+                <h6 class="text-danger">&#8377; {{ item.product.discount_price }}</h6>
+              </div>
+              <div class="col-md-3 my-auto">
+                <input type="hidden" value="{{ item.product_id }}" class="product_id">
+                {% csrf_token %}
+                <a href="{% url 'product_detail' item.product.category.slug item.product.slug%}" class="btn btn-sm btn-primary"><i class="bi bi-eye"></i> View Product</a>
+              </div>
+              <div class="col-md-2 my-md-auto mt-2">
+                <button class="btn btn-sm btn-danger removeWishlistItem" data-id="{{ item.id }}"><i class="bi bi-trash3"></i>
+                  Remove</button>
               </div>
             </div>
+            <hr>
+            {% endfor %}
+            {% else %}
+            <div class="text-center my-5">
+              <h1><i class="bi bi-heartbreak-fill"></i></h1>
+              <h3>Your Wishlist is Empty</h3>
+              <p class="text-muted
+                ">Looks like you haven't added anything to your wishlist yet.</p>
+              <a href="{% url 'categories' %}" class="btn btn-outline-primary mt-3">Explore Products</a>
+            </div>
+            {% endif %}
           </div>
-          {% endfor %}
         </div>
-        {% else %}
-        <div class="text-center my-5">
-          <h1><i class="bi bi-heartbreak-fill"></i></h1>
-          <h3>Your Wishlist is Empty</h3>
-          <p class="text-muted">Looks like you haven't added anything to your wishlist yet.</p>
-          <a href="{% url 'categories' %}" class="btn btn-outline-primary mt-3">Explore Products</a>
-        </div>
-        {% endif %}
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  const removeWishlistItemUrl = "{% url 'remove_wishlist_item' %}";
+
+</script>
 
 {% endblock %}

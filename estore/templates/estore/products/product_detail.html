@@ -11,7 +11,7 @@
         <li class="breadcrumb-item"><a class="text-light" href="{% url 'categories' %}">Collections</a></li>
         <li class="breadcrumb-item"><a class="text-light"
             href="{% url 'category_detail' products.category.slug %}">{{products.category.name}}</a></li>
-        <li class="breadcrumb-item active text-light" aria-current="page">{{ products.name }}</li>
+        <li class="breadcrumb-item text-light" aria-current="page">{{ products.name }}</li>
       </ol>
     </nav>
   </div>
@@ -81,8 +81,7 @@
                   </div>
 
                   <div class="col-lg-9">
-                    <button type="button" class="btn btn-outline-danger float-end rounded-pill ms-5 addToWishlist"
-                      aria-label="Add to Wishlist">
+                    <button type="button" class="btn btn-outline-danger float-end rounded-pill ms-5 addToWishlist" aria-label="Add to Wishlist">
                       <i class="bi bi-heart"></i>
                        <p>wishlist</p>
                     </button>

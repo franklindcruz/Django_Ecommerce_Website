@@ -1,0 +1,44 @@
+  /* Smooth fade-in and fade-out transition */
+  .alert {
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+    transform: translateY(-20px);
+  }
+  
+  .alert.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Add shadow and border-radius for aesthetic appeal */
+  .alert {
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Optional: Customize close button color */
+  .btn-close {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  /* Icons for different alert types */
+  .alert-success {
+    background-color: #d4edda;
+    border-color: #82ff9f;
+  }
+  
+  .alert-warning {
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+  }
+  
+  .alert-error {
+    background-color: #f8d7da;
+    border-color: #ff7785;
+  }
+  
+  .alert-info {
+    background-color: #d1ecf1;
+    border-color: #78edff;
+  }
+  

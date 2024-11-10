@@ -27,8 +27,6 @@
 
   {% include 'estore/inc/navbar.html' %}
 
-  {% include 'estore/inc/icons.html' %}
-
   <div class="container">
     {% include 'estore/inc/messages.html' %}
   </div>
@@ -55,6 +53,12 @@
   <!-- cart operation -->
   <script src="{% static 'js/cart.js' %}"></script>
 
+  <!-- wishlist operation -->
+  <script src="{% static 'js/wishlist.js' %}"></script>
+
+  <!-- checkout setup -->
+  <script src="{% static 'js/checkout.js' %}"></script>
+
   <!-- messages setup -->
   <script src="{% static 'js/messages.js' %}"></script>
 
@@ -63,7 +67,7 @@
   <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/alertify.min.js"></script>
 
   <script>
-    alertify.set('notifier', 'position', 'top-right');
+    alertify.set('notifier', 'position', 'bottom-right');
     {% for message in messages %}
     alertify.success("{{ message }}");
     {% endfor %}

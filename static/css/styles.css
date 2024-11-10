@@ -1,0 +1,224 @@
+body {
+  background-color: #f9f9f9;
+}
+
+/* Navbar Shadow and Border */
+.navbar {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-bottom: 2px solid #ffc107;
+  /* Adjust color as needed */
+}
+
+/* Navbar Links */
+.nav-link {
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #0047f9;
+  
+}
+
+/* Dropdown Styling */
+.dropdown-menu {
+  background-color: #f8f9fa;
+  transition: transform 0.3s ease-in-out;
+}
+
+.dropdown-item:hover {
+  background-color: #6e5200;
+  color: #fff;
+}
+
+
+/* Button and Icon Styling */
+.navbar-brand img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+/* Carousel Styles */
+.carousel {
+  height: 60vh;
+  position: relative;
+}
+
+.carousel-img {
+  object-fit: cover;
+  height: 100%;
+  filter: brightness(0.6);
+}
+
+.carousel-inner {
+  height: 100%;
+}
+
+/* Progress Bar */
+.carousel-progress {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.2);
+  z-index: 10;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #007bff;
+  transition: width 5s linear;
+}
+
+/* Smooth Transition for Carousel Items */
+.carousel-item {
+  transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+}
+
+/* Styled Carousel Controls */
+.control-btn-box {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border-radius: 50%;
+  border: 2px solid #007bff;
+  display: inline-block;
+}
+
+/* Hide Buttons on Small Screens */
+@media (max-width: 768px) {
+
+  .carousel-control-prev,
+  .carousel-control-next,
+  .carousel-indicators {
+    display: none;
+  }
+}
+
+/* Caption Styling */
+.carousel-caption h5 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.carousel-caption p {
+  font-size: 1.2rem;
+  color: #f1f1f1;
+}
+
+.carousel-caption a.btn {
+  background-color: #007bff;
+  border-color: #007bff;
+  font-size: 1rem;
+  padding: 10px 20px;
+  border-radius: 25px;
+  transition: background-color 0.3s ease;
+}
+
+.carousel-caption a.btn:hover {
+  background-color: #0056b3;
+}
+
+/* Breadcrumb Styling */
+.breadcrumb {
+  background-color: transparent;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.breadcrumb-item a {
+  color: #f8f9fa;
+  font-weight: bold;
+}
+
+/* Product Image Container */
+.img-container {
+  width: 100%;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.img-container img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.img-container:hover img {
+  transform: scale(1.05);
+}
+
+/* Button Hover Shadow */
+.btn:hover {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Card Titles */
+.card-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #333;
+  background-color: #f8f9fa;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #dee2e6;
+  margin: 0;
+}
+
+/* Order Summary Styling */
+.order-summary-card {
+  border: none;
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.order-summary-card .card-body {
+  padding: 0.5rem 1rem;
+}
+
+/* Table Styling */
+.checkout-table th,
+.checkout-table td {
+  font-size: 0.95rem;
+  padding: 0.75rem;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.checkout-table img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+/* Total Price Styling */
+#total {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #28a745;
+  text-align: right;
+}
+
+.btn-success {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Compact Layout for Order Summary */
+/* .order-summary-container {
+  max-width: 100%;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} */

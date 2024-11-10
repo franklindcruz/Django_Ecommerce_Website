@@ -23,12 +23,41 @@ def add_to_wishlist(request):
             user = User.objects.get(id=request.user.id)
 
             if Wishlist.objects.filter(product=product_check, user=user).exists():
-                return JsonResponse({'status': 'Already in wishlist'})
+                return JsonResponse({
+                    'status': 'Already in wishlist',
+                    'wishlist_items_count': Wishlist.objects.filter(user=user).count()
+                })
             else:
                 wishlist = Wishlist(product=product_check, user=user)
                 wishlist.save()
-                return JsonResponse({'status': 'Added to wishlist'})
+                return JsonResponse({
+                    'status': 'Added to wishlist',
+                    'wishlist_items_count': Wishlist.objects.filter(user=user).count()
+                })
         else:
             return JsonResponse({'status': 'Login required'})
     else:
-        return JsonResponse({'status': 'Invalid request'})
+        return redirect('home')
+
+
+def remove_wishlist_item(request):
+    if request.method == "POST":
+        if request.user.is_authenticated:
+            product_id = int(request.POST.get('product_id'))
+            product_check = Product.objects.get(id=product_id)
+            user = User.objects.get(id=request.user.id)
+
+            if Wishlist.objects.filter(product=product_check, user=user).exists():
+                wishlist = Wishlist.objects.filter(
+                    product=product_check, user=user).first()
+                wishlist.delete()
+                return JsonResponse({
+                    'status': 'Removed from wishlist',
+                    'wishlist_items_count': Wishlist.objects.filter(user=user).count()
+                })
+            else:
+                return JsonResponse({'status': 'Not in wishlist'})
+        else:
+            return JsonResponse({'status': 'Login required'})
+    else:
+        return redirect('home')

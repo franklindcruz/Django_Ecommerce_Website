@@ -9,7 +9,7 @@
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a class="text-light" href="{% url 'home' %}">Home</a></li>
         <li class="breadcrumb-item"><a class="text-light" href="{% url 'categories' %}">Collections</a></li>
-        <li class="breadcrumb-item active text-light" aria-current="page">Shopping Cart</li>
+        <li class="breadcrumb-item text-light" aria-current="page">Shopping Cart</li>
       </ol>
     </nav>
   </div>
@@ -22,59 +22,63 @@
       <hr>
 
       {% if cart_items %}
-        <!-- Cart Items Table -->
-        <div class="table-responsive">
-          <table class="table table-bordered text-center caption-top ">
-            <caption>List of products: {{ cart_items|length }}</caption>
-            <thead>
-              <tr>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for item in cart_items %}
-              <tr class="product_data">
-                <td>
+      <!-- Cart Items Table -->
+      <div class="table-responsive">
+        <table class="table table-bordered text-center caption-top ">
+          <caption>List of products: {{ cart_items|length }}</caption>
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in cart_items %}
+            <tr class="product_data">
+
+              <td>
+                <a class="text-decoration-none" href="{% url 'product_detail' item.product.category.slug item.product.slug %}">
                   <div class="d-flex align-items-center">
                     <img src="{{ item.product.product_image.url }}" alt="{{ item.product.name }}" class="img-fluid"
                       style="width: 100px; height:120px;">
                     <span class="ms-3">{{ item.product.name }}</span>
                   </div>
-                </td>
-                <td>&#8377; {{ item.product.discount_price }}</td>
-                <td>
-                  <div class="d-flex align-items-center justify-content-center">
-                    <input type="hidden" value="{{ item.product_id }}" class="product_id">
-                    {% csrf_token %}
-                    {% if item.product.quantity > 0 %}
-                    <div class="input-group text-center mb-3" style="width: 100px;">
-                      <button class="btn btn-sm btn-danger changeQuantity decrementQuantityBtn">-</button>
-                      <input type="text" class="form-control qty-input text-center" value="{{ item.quantity }}"
-                        style="width: 50px;">
-                      <button class="btn btn-sm btn-success changeQuantity incrementQuantityBtn">+</button>
-                    </div>
-                    {% else %}
-                    <label class="badge bg-danger">Out of Stock</label>
-                    {% endif %}
+                </a>
+              </td>
+
+              <td>&#8377; {{ item.product.discount_price }}</td>
+              <td>
+                <div class="d-flex align-items-center justify-content-center">
+                  <input type="hidden" value="{{ item.product_id }}" class="product_id">
+                  {% csrf_token %}
+                  {% if item.product.quantity > 0 %}
+                  <div class="input-group text-center mb-3" style="width: 100px;">
+                    <button class="btn btn-sm btn-primary changeQuantity decrementQuantityBtn">-</button>
+                    <input type="text" class="form-control qty-input text-center" value="{{ item.quantity }}"
+                      style="width:30px;">
+                    <button class="btn btn-sm btn-primary changeQuantity incrementQuantityBtn">+</button>
                   </div>
-                </td>
-                <td>
-                  <button class="btn btn-danger btn-sm deleteCartItem">Remove</button>
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-        <div class="d-flex justify-content-end">
-          <h4>Total: &#8377; <span id="cart_total">{{ cart_total }}</span></h4>
-        </div>
-        <div class="d-flex justify-content-end mt-4">
-          <a href="" class="btn btn-primary">Proceed to Checkout</a>
-        </div>
+                  {% else %}
+                  <label class="badge bg-danger">Out of Stock</label>
+                  {% endif %}
+                </div>
+              </td>
+              <td>
+                <button class="btn btn-danger btn-sm deleteCartItem">Remove</button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="d-flex justify-content-end">
+        <h4>Total: &#8377; <span id="cart_total">{{ cart_total }}</span></h4>
+      </div>
+      <div class="d-flex justify-content-end mt-4">
+        <a href="{% url 'checkout' %}" class="btn btn-primary">Proceed to Checkout</a>
+      </div>
 
       {% else %}
       <!-- Empty Cart Message -->

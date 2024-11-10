@@ -98,12 +98,75 @@ class Cart(models.Model):
 
     def __str__(self):
         return self.product.name + ' - ' + self.user.username + ' - ' + str(self.quantity) + ' - ' + str(self.get_total())
-    
+
 class Wishlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     def __str__(self):
         return self.product.name + ' - ' + self.user.username
+
+
+class Order(models.Model):
+
+    ORDER_STATUS_CHOICES = (
+        ('Pending', 'Pending'),
+        ('Shipped', 'Shipped'),
+        ('Delivered', 'Delivered'),
+    )
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    fname = models.CharField(max_length=100)
+    lname = models.CharField(max_length=100, null=False, blank=False)
+
+    email = models.EmailField(max_length=100, null=False, blank=False)
+    phone = models.CharField(max_length=15, null=False, blank=False)
+    address = models.TextField(null=False, blank=False)
+    city = models.CharField(max_length=100, null=False, blank=False)
+    state = models.CharField(max_length=100, null=False, blank=False)
+    country = models.CharField(max_length=100, null=False, blank=False)
+    zipcode = models.CharField(max_length=10, null=False, blank=False)
+    
+    total_price = models.DecimalField(max_digits=10, decimal_places=2,null=False, blank=False)
+  
+    payment_mode = models.CharField(max_length=100, null=False, blank=False)
+    payment_id = models.CharField(max_length=100, null=True, blank=True)
+    status = models.CharField(
+        max_length=100, choices=ORDER_STATUS_CHOICES, default='Pending')
+    message = models.TextField(null=True, blank=True)
+    tracking_id = models.CharField(max_length=100, null=True, blank=True)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return '{} - {} - {}'.format(self.tracking_id, self.user.username, self.status)
+       
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return '{} - {} - {}'.format(self.order, self.order.tracking_id, self.quantity)
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='profile/', null=True, blank=True, default='avatar_pic.jpg')
+    phone = models.CharField(max_length=15, null=True, blank=True)
+    address = models.TextField(null=True, blank=True)
+    city = models.CharField(max_length=100, null=True, blank=True)
+    state = models.CharField(max_length=100, null=True, blank=True)
+    country = models.CharField(max_length=100, null=True, blank=True)
+    zipcode = models.CharField(max_length=10, null=True, blank=True)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.user.username

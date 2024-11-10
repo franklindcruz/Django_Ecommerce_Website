@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from estore.controller import auth, wishlist
+from estore.controller import auth, cart, wishlist, checkout
 
 urlpatterns = [
     path('', views.index, name='home'),
@@ -15,15 +15,24 @@ urlpatterns = [
     path('logout/', auth.logout, name='logout'),
 
 
-    path('add_to_cart/', views.add_to_cart,
+    path('add_to_cart/', cart.add_to_cart,
          name='add_to_cart'),
-    path('cart/', views.cart_view, name='cart_view'),
-    
-    path('update_cart/', views.update_cart, name='update_cart'),
-    
-    path('delete_cart_item/', views.delete_cart_item, name='delete_cart_item'),
-    
+    path('cart/', cart.cart_view, name='cart_view'),
+    path('update_cart/', cart.update_cart, name='update_cart'),
+    path('delete_cart_item/', cart.delete_cart_item, name='delete_cart_item'),
+
+
     path('wishlist/', wishlist.wishlist_view, name='wishlist_view'),
     path('add_to_wishlist/', wishlist.add_to_wishlist, name='add_to_wishlist'),
+    path('remove_wishlist_item/', wishlist.remove_wishlist_item,
+         name='remove_wishlist_item'),
+
+
+    path('checkout/', checkout.checkout_view, name='checkout'),
+    path('place-order/', checkout.place_order, name='place_order'),
+    path('proceed_to_pay/', checkout.razorpay_check, name="proceed_to_pay"),
+    
+    path('my_orders/', checkout.my_orders, name='my_orders'),
+
 
 ]
