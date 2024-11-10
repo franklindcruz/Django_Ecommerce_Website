@@ -1,0 +1,37 @@
+{% extends 'estore/layouts/main.html' %}
+{% block title %}Register{% endblock %}
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <div class="card card-body shadow-lg bg-light mt-5">
+        <h2 class="text-center">Register</h2>
+        <hr>
+        <form action="" method="post">
+          {% csrf_token %}
+          <div class="form-grop mb-3">
+            <label for="username">Username</label>
+            {{ form.username }}
+          </div>
+          <div class="form-grop mb-3">
+            <label for="email">Email</label>
+            {{ form.email }}
+          </div>
+          <div class="form-grop mb-3">
+            <label for="password">Password</label>
+            {{ form.password1 }}
+          </div>
+          <div class="form-grop mb-3">
+            <label for="password2">Confirm Password</label>
+            {{ form.password2 }}
+          </div>
+          <button class="btn btn-success float-end px-4 shadow" type="submit">Register</button>
+        </form>
+        <p class="mt-2">Already have an account? <a href="{% url 'login' %}">Login</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

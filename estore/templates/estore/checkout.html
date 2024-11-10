@@ -1,0 +1,101 @@
+
+{% extends 'estore/layouts/main.html' %}
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb Section -->
+<div class="py-3 bg-secondary shadow-sm">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a class="text-light" href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-item"><a class="text-light" href="{% url 'categories' %}">Collections</a></li>
+        <li class="breadcrumb-item active text-light" aria-current="page">Checkout</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="container mt-5">
+  <h1 class="mb-4 text-center">Checkout</h1>
+  <hr>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="mb-4">Shipping Address</h3>
+      <form id="shipping-form">
+        <div class="mb-3">
+          <label for="name" class="form-label">Full Name</label>
+          <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="mb-3">
+          <label for="phone" class="form-label">Phone</label>
+          <input type="text" class="form-control" id="phone" name="phone" required>
+        </div>
+        <div class="mb-3">
+          <label for="address" class="form-label">Address</label>
+          <textarea class="form-control" id="address" name="address" required></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="city" class="form-label">City</label>
+          <input type="text" class="form-control" id="city" name="city" required>
+        </div>
+        <div class="mb-3">
+          <label for="state" class="form-label">State</label>
+          <input type="text" class="form-control" id="state" name="state" required>
+        </div>
+        <div class="mb-3">
+          <label for="zip" class="form-label">Zip</label>
+          <input type="text" class="form-control" id="zip" name="zip" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+    <div class="col-md-6">
+      <h3 class="mb-4">Order Summary</h3>
+      <div class="table-responsive">
+        <table class="table table-bordered text-center">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody id="order-summary">
+            {% for item in cart_items %}
+            <tr data-id="{{ item.id }}" class="product_data">
+              <td>
+                <img src="{{ item.product.product_image.url }}" alt="{{ item.product.name }}" class="img-fluid"
+                  style="width: 80px; height: 80px;">
+                <p class="mt-2">{{ item.product.name }}</p>
+              </td>
+              <td class="item-price
+                {% if not item.product.discount_price %} original-price {% endif %}">
+                {% if item.product.discount_price %}
+                &#8377;{{ item.product.discount_price }}
+                {% else %}
+                &#8377;{{ item.product.original_price }}
+                {% endif %}
+              </td>
+              <td>
+                <input type="text" class="form-control qty-input d-inline text-center" value="{{ item.quantity }}"
+                  data-id="{{ item.id }}" style="width: 60px;" disabled>
+              </td>
+              <td>&#8377;{{ item.get_total }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="float-end mt-4">
+        <h3>Total: &#8377;<span id="total">{{ total }}</span></h3>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

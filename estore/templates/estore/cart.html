@@ -1,0 +1,97 @@
+{% extends 'estore/layouts/main.html' %}
+{% block title %}My Shopping Cart{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb Section -->
+<div class="py-3 bg-secondary shadow-sm">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a class="text-light" href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-item"><a class="text-light" href="{% url 'categories' %}">Collections</a></li>
+        <li class="breadcrumb-item active text-light" aria-current="page">Shopping Cart</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="py-5">
+  <div class="container">
+    <div class="row cart-data">
+      <h1 class="mb-4">My Shopping Cart</h1>
+      <hr>
+
+      {% if cart_items %}
+        <!-- Cart Items Table -->
+        <div class="table-responsive">
+          <table class="table table-bordered text-center caption-top ">
+            <caption>List of products: {{ cart_items|length }}</caption>
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in cart_items %}
+              <tr class="product_data">
+                <td>
+                  <div class="d-flex align-items-center">
+                    <img src="{{ item.product.product_image.url }}" alt="{{ item.product.name }}" class="img-fluid"
+                      style="width: 100px; height:120px;">
+                    <span class="ms-3">{{ item.product.name }}</span>
+                  </div>
+                </td>
+                <td>&#8377; {{ item.product.discount_price }}</td>
+                <td>
+                  <div class="d-flex align-items-center justify-content-center">
+                    <input type="hidden" value="{{ item.product_id }}" class="product_id">
+                    {% csrf_token %}
+                    {% if item.product.quantity > 0 %}
+                    <div class="input-group text-center mb-3" style="width: 100px;">
+                      <button class="btn btn-sm btn-danger changeQuantity decrementQuantityBtn">-</button>
+                      <input type="text" class="form-control qty-input text-center" value="{{ item.quantity }}"
+                        style="width: 50px;">
+                      <button class="btn btn-sm btn-success changeQuantity incrementQuantityBtn">+</button>
+                    </div>
+                    {% else %}
+                    <label class="badge bg-danger">Out of Stock</label>
+                    {% endif %}
+                  </div>
+                </td>
+                <td>
+                  <button class="btn btn-danger btn-sm deleteCartItem">Remove</button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="d-flex justify-content-end">
+          <h4>Total: &#8377; <span id="cart_total">{{ cart_total }}</span></h4>
+        </div>
+        <div class="d-flex justify-content-end mt-4">
+          <a href="" class="btn btn-primary">Proceed to Checkout</a>
+        </div>
+
+      {% else %}
+      <!-- Empty Cart Message -->
+      <div class="text-center my-5">
+        <h1><i class="bi bi-bag-x-fill"></i></h1>
+        <h3>Your Cart is Empty</h3>
+        <p class="text-muted">Looks like you haven't added anything to your cart yet.</p>
+        <a href="{% url 'categories' %}" class="btn btn-outline-primary mt-3">Explore Products</a>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+
+<script>
+  const updateCartUrl = "{% url 'update_cart' %}";
+  const deleteCartItemUrl = "{% url 'delete_cart_item' %}";       
+</script>
+{% endblock %}

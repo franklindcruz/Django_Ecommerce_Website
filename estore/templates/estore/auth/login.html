@@ -1,0 +1,30 @@
+{% extends 'estore/layouts/main.html' %}
+{% block title %}Login{% endblock %}
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <div class="card card-body bg-light mt-5">
+        <h2 class="text-center">Login</h2>
+        <hr>
+        <form action="{% url 'login' %}" method="post">
+          {% csrf_token %}
+          <div class="form-grop mb-3">
+            <label for="username">Username</label>
+            <input type="text" value="" class="form-control" name="username" placeholder="Enter Username">
+          </div>
+          <div class="form-grop mb-3">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="" class="form-control " placeholder="Enter Username">
+          </div>
+          <button class="btn btn-success float-end px-4 shadow" type="submit">Login</button>
+        </form>
+        <a class="mt-2" href="{% url 'login' %}">Forgot Password?</a>
+        <p class="mt-2">Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

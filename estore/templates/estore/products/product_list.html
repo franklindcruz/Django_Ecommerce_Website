@@ -1,0 +1,54 @@
+{% extends 'estore/layouts/main.html' %}
+{% block title %}{{ category.name }}{% endblock %}
+
+{% block content %}
+
+<!-- Breadcrumb Section -->
+<div class="py-3 bg-secondary shadow-sm">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a class="text-light" href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><a class="text-light" href="{% url 'categories' %}">Collections</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><a class="text-light"><a href="{% url 'category_detail' category.slug %}">{{ category.name }}</a></li>
+
+      </ol>
+    </nav>
+  </div>
+</div>
+
+
+<!-- Category Products Section -->
+<div class="container py-4">
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <h1 class="mb-4">{{ category.name }}</h1>
+      <hr>
+      <div class="row">
+        {% for product in products %}
+        <div class="col-md-3 mb-4">
+          <div class="card h-100 shadow-sm">
+            <a href="{% url 'product_detail' product.category.slug product.slug %}" class="text-decoration-none">
+              <div class="card-img-container">
+                <img src="{{product.product_image.url}}" class="card-img-top" alt="{{product.name}}">
+              </div>
+              <div class="card-body text-center">
+                <h5 class="card-title">{{product.name}}</h5>
+                <h6>
+                  {% if product.discount_price %}
+                  <span class="text-muted text-decoration-line-through">&#8377; {{product.original_price}}</span>
+                </h6>
+                <h6 class="text-danger">&#8377; {{product.discount_price}}</h6>
+                {% else %}
+                <h6>{{product.original_price}}</h6>
+                {% endif %}
+              </div>
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
