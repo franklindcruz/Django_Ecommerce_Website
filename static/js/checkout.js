@@ -77,7 +77,7 @@ $(document).on('click', '.payWithRazorpay', function (e) {
                   text: response_c.status,
                   icon: 'success'
                 }).then(value => {
-                  window.location.href = '/'
+                  window.location.href = '/my_orders/'
                 })
               }
               // error: function (response) {

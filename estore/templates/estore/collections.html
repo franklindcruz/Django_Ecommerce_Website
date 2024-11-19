@@ -9,18 +9,20 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a class="text-light" href="{% url 'home' %}">Home</a></li>
-        <li class="breadcrumb-item" aria-current="page"><a class="text-light" href="{% url 'categories' %}">Collections</a></li>
+        <li class="breadcrumb-item" aria-current="page"><a class="text-light"
+            href="{% url 'categories' %}">Collections</a></li>
       </ol>
     </nav>
   </div>
 </div>
 
 <!-- Collections Section -->
-<div class="container py-4">
+<div class="container mt-5">
+  <h1 class="mb-4">Collections</h1>
+  <hr>
   <div class="row">
-    <div class="col-md-12 text-center">
-      <h1 class="mb-4">Collections</h1>
-      <hr>
+    <div class="col-md-12">
+
       <div class="row">
         {% for category in categories %}
         <div class="col-md-3 mb-4">
@@ -40,5 +42,6 @@
     </div>
   </div>
 </div>
+
 
 {% endblock %}

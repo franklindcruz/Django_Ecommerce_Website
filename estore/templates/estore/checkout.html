@@ -111,9 +111,9 @@
             </table>
             <h3 class="fw-bold text-right">Total: <span id="total">&#8377;{{ cart_total }}</span></h3>
             <input type="hidden" name="payment_mode">
-            <button type="submit" class="btn btn-success w-100">COD | Place Order</button>
-            <button type="button" class="btn btn-primary w-100 mt-2 payWithRazorpay">Pay with Razorpay</button>
-           
+            <button type="submit" class="btn btn-success w-100 p-2 ">COD | Place Order</button>
+            <button type="button" class="btn btn-primary w-100 mt-2 p-2 payWithRazorpay">Pay with Razorpay</button>
+
             {% else %}
             <div class="text-center p-3">
               <h5>Your cart is empty</h5>
@@ -135,4 +135,5 @@
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 {% endblock %}

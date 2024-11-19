@@ -106,8 +106,3 @@ def razorpay_check(request):
         total_price += item.product.discount_price * item.quantity
 
     return JsonResponse({'total_price': total_price})
-
-
-@login_required(login_url='login')
-def my_orders(request):
-    return HttpResponse('My Orders Page')

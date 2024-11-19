@@ -18,6 +18,8 @@
   <!-- Default theme -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/themes/default.min.css" />
 
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
   <link rel="stylesheet" href="{% static 'css/messages_styles.css' %}">
   {% csrf_token %}
@@ -35,15 +37,54 @@
   {% block slider %} {% endblock %}
   {% block content %} {% endblock %}
 
+  <a href="https://wa.me/+919947809542?text=I'm%20interested%20to%20purchase%20from%20here"
+    class="whatsapp-chat text-decoration-none" target="_blank">
+    <img src="{% static 'images/WhatsApp.png' %}" width="60" alt="whatsapp image">
+    <p>chat now!!!</p>
+  </a>
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
     integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
     crossorigin="anonymous"></script>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
     integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
     crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+
+  <script src="{% static 'js/search_products.js' %}"></script>
+
+  <script>
+    var availableTags = []
+
+    $.ajax({
+      method: 'GET',
+      url: searchProductsUrl,
+      success: function (response) {
+        console.log(response)
+      }
+    })
+    $('#searchProducts').autocomplete({
+      source: availableTags
+    });
+  </script>
+  
+  <!--Start of Tawk.to Script-->
+  <script type="text/javascript">
+    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    (function () {
+      var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+      s1.async = true;
+      s1.src = 'https://embed.tawk.to/673b8dd64304e3196ae4992f/1id0a44c0';
+      s1.charset = 'UTF-8';
+      s1.setAttribute('crossorigin', '*');
+      s0.parentNode.insertBefore(s1, s0);
+    })();
+  </script>
+  <!--End of Tawk.to Script-->
+
   <!-- quantity setup -->
   <script src="{% static 'js/quantity_control.js' %}"></script>
 
@@ -69,10 +110,9 @@
   <script>
     alertify.set('notifier', 'position', 'bottom-right');
     {% for message in messages %}
-    alertify.success("{{ message }}");
+    alertify["{{ message.tags }}"]("{{ message }}");
     {% endfor %}
   </script>
-
 
 
   {% block scripts %} {% endblock %}

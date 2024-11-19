@@ -130,7 +130,6 @@ class Order(models.Model):
     zipcode = models.CharField(max_length=10, null=False, blank=False)
     
     total_price = models.DecimalField(max_digits=10, decimal_places=2,null=False, blank=False)
-  
     payment_mode = models.CharField(max_length=100, null=False, blank=False)
     payment_id = models.CharField(max_length=100, null=True, blank=True)
     status = models.CharField(

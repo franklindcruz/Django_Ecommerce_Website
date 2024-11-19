@@ -4,8 +4,6 @@ from django.contrib import messages
 from django.http import JsonResponse
 
 # Create your views here.
-
-
 def index(request):
     return render(request, 'estore/index.html')
 
@@ -46,3 +44,9 @@ def product_detail(request, cate_slug, prod_slug):
     else:
         messages.warning(request, 'Product not found')
         return redirect('categories')
+
+def search_products(request):
+    products = Product.objects.filter(status=0).values_list('name', flat=True)
+    productsList= list(products)
+    
+    return JsonResponse(productsList, safe=False)

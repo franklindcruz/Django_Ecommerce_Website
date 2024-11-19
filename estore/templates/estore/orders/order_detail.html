@@ -1,0 +1,75 @@
+{% extends 'estore/layouts/main.html' %}
+{% block title %}My Orders{% endblock %}
+
+{% block content %}
+
+<!-- Breadcrumb Section -->
+<div class="py-3 bg-secondary shadow-sm">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a class="text-light" href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-item" aria-current="page"><a class="text-light" href="{% url 'my_orders' %}">My Orders</a>
+        </li>
+        <li class="breadcrumb-item text-light" aria-current="page">Order View</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<!-- Order Details Section -->
+<div class="container mt-5">
+  <h1 class="mb-4">Order View</h1>
+  <hr>
+  <div class="row g-4 mb-5">
+    <!-- Shipping Details -->
+    <div class="col-md-6">
+      <div class="card shadow border-0 h-100">
+        <div class="card-header bg-primary text-white fs-4 fw-bold">Shipping Details</div>
+        <div class="card-body">
+          <p><span class="fw-bold">Name:</span> {{ order.fname }} {{ order.lname }}</p>
+          <p><span class="fw-bold">Email:</span> {{ order.email }}</p>
+          <p><span class="fw-bold">Phone:</span> {{ order.phone }}</p>
+          <p><span class="fw-bold">Address:</span> {{ order.address }}, {{ order.city }}, {{ order.state }}</p>
+          <p><span class="fw-bold">Zip Code:</span> {{ order.zipcode }}</p>
+        </div>
+      </div>
+    </div>
+    <!-- Order Details -->
+    <div class="col-md-6">
+      <div class="card shadow border-0 h-100">
+        <div class="card-header bg-primary text-white fs-4 fw-bold">Order Details</div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-striped table-hover text-center align-middle">
+              <thead class="table-dark">
+                <tr>
+                  <th>Item</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                  <th>Image</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in order_items %}
+                <tr>
+                  <td>{{ item.product.name }}</td>
+                  <td>{{ item.quantity }}</td>
+                  <td>{{ item.price }}</td>
+                  <td><img src="{{ item.product.product_image.url }}" alt="Product Image" class="img-fluid rounded"
+                      width="50"></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <p class="fw-bold fs-3 ">Total Price:<span class="float-end"> &#8377; {{ order.total_price }}</span></p>
+            <p><span class="fw-bold">Payment Method:</span> {{ order.payment_mode }} </p>
+            <p><span class="fw-bold">Order Status:</span> {{ order.status }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

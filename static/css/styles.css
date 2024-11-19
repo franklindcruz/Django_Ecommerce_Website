@@ -2,41 +2,73 @@ body {
   background-color: #f9f9f9;
 }
 
-/* Navbar Shadow and Border */
+/* Navbar Styling */
 .navbar {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border-bottom: 2px solid #ffc107;
-  /* Adjust color as needed */
+  padding: 0.5rem 1rem;
 }
 
-/* Navbar Links */
+.navbar-brand {
+  font-size: 1.5rem;
+  padding: 0.3rem 0.8rem;
+}
+
+/* Nav Items */
 .nav-link {
-  transition: all 0.3s ease;
+  transition: color 0.3s ease;
+  padding: 0.5rem 1rem;
 }
 
 .nav-link:hover {
   color: #0047f9;
-  
+}
+
+.nav-link.active {
+  font-weight: bold;
+  color: #d9534f !important;
+}
+
+/* Search Bar Styling */
+.search-bar {
+  width: 250px;
+}
+
+.search-bar .form-control {
+  border-radius: 0.375rem 0 0 0.375rem;
+}
+
+.search-bar .btn {
+  border-radius: 0 0.375rem 0.375rem 0;
 }
 
 /* Dropdown Styling */
 .dropdown-menu {
-  background-color: #f8f9fa;
-  transition: transform 0.3s ease-in-out;
+  border-radius: 0.5rem;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.dropdown-item {
+  transition: background-color 0.3s ease;
 }
 
 .dropdown-item:hover {
-  background-color: #6e5200;
+  background-color: #ffc107;
   color: #fff;
 }
 
+/* Badge Styling */
+.badge {
+  font-size: 0.75rem;
+  padding: 0.4rem 0.6rem;
+}
 
-/* Button and Icon Styling */
-.navbar-brand img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 10px;
+/* Responsive Adjustments */
+@media (max-width: 991px) {
+  .search-bar {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
 }
 
 /* Carousel Styles */
@@ -214,11 +246,19 @@ body {
   font-weight: 600;
 }
 
-/* Compact Layout for Order Summary */
-/* .order-summary-container {
-  max-width: 100%;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-} */
+.whatsapp-chat{
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 100;
+  color:#28a745;
+}
+
+.whatsapp-chat:hover {
+  transform: scale(1.05);
+}
+.whatsapp-chat p {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}

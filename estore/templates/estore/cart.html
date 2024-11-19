@@ -15,87 +15,99 @@
   </div>
 </div>
 
-<div class="py-5">
-  <div class="container">
-    <div class="row cart-data">
-      <h1 class="mb-4">My Shopping Cart</h1>
-      <hr>
+<div class="container mt-5">
+  <h1 class="mb-4">My Shopping Cart</h1>
+  <hr>
+  <div class="row cart-data pb-3 mb-5">
+    <div class="col-md-12">
+      <div class="card shadow">
+        <div class="card-body">
+          {% if cart_items %}
+          <!-- Cart Items Table -->
+          <div class="table-responsive">
+            <table class="table table-bordered text-center caption-top align-middle">
+              <caption>List of products: {{ cart_items|length }}</caption>
+              <thead class="table-dark">
+                <tr>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in cart_items %}
+                <tr class="product_data">
+                  <!-- Product Column -->
+                  <td>
+                    <a class="text-decoration-none"
+                      href="{% url 'product_detail' item.product.category.slug item.product.slug %}">
+                      <div class="d-flex flex-column align-items-center justify-content-center">
+                        <img src="{{ item.product.product_image.url }}" alt="{{ item.product.name }}" class="img-fluid"
+                          style="width: 140px; height:120px;">
+                        <p class="text-muted mt-2">{{ item.product.name }}</p>
+                      </div>
+                    </a>
+                  </td>
 
-      {% if cart_items %}
-      <!-- Cart Items Table -->
-      <div class="table-responsive">
-        <table class="table table-bordered text-center caption-top ">
-          <caption>List of products: {{ cart_items|length }}</caption>
-          <thead>
-            <tr>
-              <th>Product</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for item in cart_items %}
-            <tr class="product_data">
+                  <!-- Price Column -->
+                  <td>
+                    &#8377; {{ item.product.discount_price }}
+                  </td>
 
-              <td>
-                <a class="text-decoration-none" href="{% url 'product_detail' item.product.category.slug item.product.slug %}">
-                  <div class="d-flex align-items-center">
-                    <img src="{{ item.product.product_image.url }}" alt="{{ item.product.name }}" class="img-fluid"
-                      style="width: 100px; height:120px;">
-                    <span class="ms-3">{{ item.product.name }}</span>
-                  </div>
-                </a>
-              </td>
+                  <!-- Quantity Column -->
+                  <td>
+                    <div class="d-flex align-items-center justify-content-center">
+                      <input type="hidden" value="{{ item.product_id }}" class="product_id">
+                      {% csrf_token %}
+                      {% if item.product.quantity > 0 %}
+                      <div class="input-group" style="width:120px;">
+                        <button class="btn btn-sm btn-primary changeQuantity decrementQuantityBtn">-</button>
+                        <input type="text" class="form-control qty-input text-center" value="{{ item.quantity }}"
+                          style="width:40px;">
+                        <button class="btn btn-sm btn-primary changeQuantity incrementQuantityBtn">+</button>
+                      </div>
+                      {% else %}
+                      <label class="badge bg-danger">Out of Stock</label>
+                      {% endif %}
+                    </div>
+                  </td>
 
-              <td>&#8377; {{ item.product.discount_price }}</td>
-              <td>
-                <div class="d-flex align-items-center justify-content-center">
-                  <input type="hidden" value="{{ item.product_id }}" class="product_id">
-                  {% csrf_token %}
-                  {% if item.product.quantity > 0 %}
-                  <div class="input-group text-center mb-3" style="width: 100px;">
-                    <button class="btn btn-sm btn-primary changeQuantity decrementQuantityBtn">-</button>
-                    <input type="text" class="form-control qty-input text-center" value="{{ item.quantity }}"
-                      style="width:30px;">
-                    <button class="btn btn-sm btn-primary changeQuantity incrementQuantityBtn">+</button>
-                  </div>
-                  {% else %}
-                  <label class="badge bg-danger">Out of Stock</label>
-                  {% endif %}
-                </div>
-              </td>
-              <td>
-                <button class="btn btn-danger btn-sm deleteCartItem">Remove</button>
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+                  <!-- Action Column -->
+                  <td>
+                    <div class="d-flex align-items-center justify-content-center">
+                      <button class="btn btn-danger btn-sm deleteCartItem">Remove</button>
+                    </div>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="d-flex justify-content-end">
+            <h4>Total: &#8377; <span id="cart_total">{{ cart_total }}</span></h4>
+          </div>
+          <div class="d-flex justify-content-end mt-4">
+            <a href="{% url 'checkout' %}" class="btn btn-primary">Proceed to Checkout</a>
+          </div>
+
+          {% else %}
+          <!-- Empty Cart Message -->
+          <div class="text-center my-5">
+            <h1><i class="bi bi-bag-x-fill"></i></h1>
+            <h3>Your Cart is Empty</h3>
+            <p class="text-muted">Looks like you haven't added anything to your cart yet.</p>
+            <a href="{% url 'categories' %}" class="btn btn-outline-primary mt-3">Explore Products</a>
+          </div>
+          {% endif %}
+        </div>
       </div>
-      <div class="d-flex justify-content-end">
-        <h4>Total: &#8377; <span id="cart_total">{{ cart_total }}</span></h4>
-      </div>
-      <div class="d-flex justify-content-end mt-4">
-        <a href="{% url 'checkout' %}" class="btn btn-primary">Proceed to Checkout</a>
-      </div>
-
-      {% else %}
-      <!-- Empty Cart Message -->
-      <div class="text-center my-5">
-        <h1><i class="bi bi-bag-x-fill"></i></h1>
-        <h3>Your Cart is Empty</h3>
-        <p class="text-muted">Looks like you haven't added anything to your cart yet.</p>
-        <a href="{% url 'categories' %}" class="btn btn-outline-primary mt-3">Explore Products</a>
-      </div>
-      {% endif %}
-
     </div>
   </div>
 </div>
 
 <script>
   const updateCartUrl = "{% url 'update_cart' %}";
-  const deleteCartItemUrl = "{% url 'delete_cart_item' %}";       
+  const deleteCartItemUrl = "{% url 'delete_cart_item' %}";
 </script>
 {% endblock %}

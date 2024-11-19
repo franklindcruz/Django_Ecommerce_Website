@@ -7,7 +7,7 @@ $(document).on('click', '.changeQuantity', function (e) {
   let token = $('input[name=csrfmiddlewaretoken]').val()
 
   $.ajax({
-    type: 'POST',
+    method: 'POST',
     url: updateCartUrl,
     data: {
       product_id: product_id,
@@ -36,7 +36,7 @@ $(document).on('click', '.deleteCartItem', function (e) {
   let token = $('input[name=csrfmiddlewaretoken]').val()
 
   $.ajax({
-    type: 'POST',
+    method: 'POST',
     url: deleteCartItemUrl,
     data: {
       product_id: product_id,
