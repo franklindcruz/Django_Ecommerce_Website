@@ -3,12 +3,10 @@ from pathlib import Path
 import environ
 import os
 
-# env = os.environ.get
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Initialize environ
 env = environ.Env()
-
-BASE_DIR = Path(__file__).resolve().parent.parent
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 
@@ -135,9 +133,11 @@ EMAIL_HOST_USER= env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD= env('EMAIL_HOST_PASSWORD')
 
 
-RAZORPAY_KEY= env('RAZORPAY_KEY_ID')
-RAZORPAY_SECRET= env('RAZORPAY_SECRET_KEY')
+RAZORPAY_KEY_ID= env('RAZORPAY_KEY_ID')
+RAZORPAY_SECRET_KEY= env('RAZORPAY_SECRET_KEY')
 
+PAYPAL_CLIENT_ID=''
+PAYPAL_CLIENT_SECRET=''
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

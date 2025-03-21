@@ -18,9 +18,9 @@ class Category(models.Model):
     image = models.ImageField(upload_to=get_file_path, null=True, blank=True)
     description = models.TextField(max_length=500, null=False, blank=False)
     status = models.BooleanField(
-        default=False, help_text="0-inactive, 1-active")
+        default=False, help_text="0-Inactive, 1-Active")
     trending = models.BooleanField(
-        default=False, help_text="0-default, 1-trending")
+        default=False, help_text="0-Not Trending, 1-Trending")
     meta_title = models.CharField(max_length=150, null=False, blank=False)
     meta_keywords = models.CharField(max_length=200, null=False, blank=False)
     meta_description = models.CharField(
@@ -58,9 +58,9 @@ class Product(models.Model):
     discount_price = models.DecimalField(max_digits=10, decimal_places=2)
     tag = models.CharField(max_length=100, null=False, blank=False)
     available = models.BooleanField(
-        default=False, help_text="0-default, 1-available")
+        default=False, help_text="0-Not Available, 1-Available")
     trending = models.BooleanField(
-        default=False, help_text="0-default, 1-trending")
+        default=False, help_text="0-Not Trending, 1-Trending")
     meta_title = models.CharField(max_length=150, null=False, blank=False)
     meta_keywords = models.CharField(max_length=200, null=False, blank=False)
     meta_description = models.CharField(

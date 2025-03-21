@@ -6,10 +6,11 @@ urlpatterns = [
     path('', views.index, name='home'),
     path('categories/', views.category, name='categories'),
     path('categories/<str:slug>/', views.category_detail, name='category_detail'),
-    path('categories/<str:cate_slug>/<str:prod_slug>/',
-         views.product_detail, name='product_detail'),
+    path('categories/<str:cate_slug>/<str:prod_slug>/', views.product_detail, name='product_detail'),
+
     
-    path('search_products/',views.search_products,name='search_products'),
+    path('product_list_query/', views.product_list_query, name='product_list_query'),
+    path('search_product/', views.search_product, name='search_product'),
 
     path('register/', auth.register, name='register'),
     path('login/', auth.login, name='login'),

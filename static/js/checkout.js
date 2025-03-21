@@ -40,7 +40,7 @@ $(document).on('click', '.payWithRazorpay', function (e) {
         }
         console.log(response)
         var options = {
-          key: 'rzp_test_SROSnyInFv81S4', // Enter the Key ID generated from the Dashboard
+          key: razorpayKeyId, // Enter the Key ID generated from the Dashboard
           amount: response.total_price * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
           currency: 'INR',
           name: 'SHOPEE',
@@ -79,15 +79,14 @@ $(document).on('click', '.payWithRazorpay', function (e) {
                 }).then(value => {
                   window.location.href = '/my_orders/'
                 })
+              },
+              error: function (response_c) {
+                swal({
+                  title: 'Error!',
+                  text: response_c.responseJSON.error,
+                  icon: 'error'
+                })
               }
-              // error: function (response) {
-              //   if (response.responseJSON && response.responseJSON.error) {
-              //     alertify.error(response.responseJSON.error);
-              //   } else {
-              //     alertify.error('An error occurred. Please try again.');
-              //   }
-              //   console.log(response);
-              // }
             })
           },
           prefill: {
@@ -103,78 +102,7 @@ $(document).on('click', '.payWithRazorpay', function (e) {
           }
         }
         var rzp1 = new Razorpay(options)
-        // rzp1.on('payment.failed', function (response) {
-        //   alert(response.error.code)
-        //   alert(response.error.description)
-        //   alert(response.error.source)
-        //   alert(response.error.step)
-        //   alert(response.error.reason)
-        //   alert(response.error.metadata.order_id)
-        //   alert(response.error.metadata.payment_id)
-        // })
         rzp1.open()
-
-        // let options = {
-        //   key: razorpayKeyId , // Enter the Key ID from the Dashboard
-        //   amount: response.cart_total * 100, // Amount in paise
-        //   currency: 'INR',
-        //   name: 'SHOPEE', // Business name
-        //   image: 'https://marketplace.canva.com/EAE72jfknRM/2/0/1600w/canva-yellow-and-black-online-shop-business-logo-AvRZNVCTIeg.jpg', // Logo URL
-        // handler: function (response_b) {
-        //   alert(response_b.razorpay_payment_id);
-
-        //   let data = {
-        //     fname: fname,
-        //     lname: lname,
-        //     email: email,
-        //     phone: phone,
-        //     address: address,
-        //     city: city,
-        //     state: state,
-        //     country: country,
-        //     zipcode: zipcode,
-        //     payment_mode: 'Paid by Razorpay',
-        //     payment_id: response_b.razorpay_payment_id,
-        //     csrfmiddlewaretoken: token
-        //   };
-
-        //     $.ajax({
-        //       method: "POST",
-        //       url: placeOrderUrl,
-        //       data: data,
-        //       success: function (response_c) {
-        //         console.log(response_c);
-
-        //         swal({
-        //           title: 'Congratulations!',
-        //           text: response_c.status,
-        //           icon: 'success'
-        //         }).then(() => {
-        //           window.location.href = '/my_orders/';
-        //         });
-        //       },
-        //       error: function (response) {
-        //         if (response.responseJSON && response.responseJSON.error) {
-        //           alertify.error(response.responseJSON.error);
-        //         } else {
-        //           alertify.error('An error occurred. Please try again.');
-        //         }
-        //         console.log(response);
-        //       }
-        //     });
-        //   },
-        //   prefill: {
-        //     name: fname + ' ' + lname, // Customer's name
-        //     email: email,
-        //     contact: phone // Customer's phone number
-        //   },
-        //   theme: {
-        //     color: '#3399cc'
-        //   },
-        // };
-
-        // let rzp1 = new Razorpay(options);
-        // rzp1.open();
       }
     })
   }

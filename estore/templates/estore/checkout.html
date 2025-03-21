@@ -111,9 +111,12 @@
             </table>
             <h3 class="fw-bold text-right">Total: <span id="total">&#8377;{{ cart_total }}</span></h3>
             <input type="hidden" name="payment_mode">
-            <button type="submit" class="btn btn-success w-100 p-2 ">COD | Place Order</button>
-            <button type="button" class="btn btn-primary w-100 mt-2 p-2 payWithRazorpay">Pay with Razorpay</button>
-
+            <!-- PayPal and Razorpay Buttons -->
+            <div class="mt-3">
+              <button type="submit" class="btn btn-success w-100 p-2">COD | Place Order</button>
+              <button type="button" class="btn btn-primary w-100 mt-2 p-2 payWithRazorpay">Pay with Razorpay</button>
+              <div id="paypal-button-container" class="mt-2"></div>
+            </div>
             {% else %}
             <div class="text-center p-3">
               <h5>Your cart is empty</h5>
@@ -135,5 +138,37 @@
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script
+  src="https://www.paypal.com/sdk/js?client-id=AW4VDu9NLFEc_yunEJKrLCGPG1vbA5z1qNPZF2rv4qogKEhT76g3kpAcROWqF3uel9Evd6FCZcdxeC4u&currency=USD"></script>
+<script>
+  window.paypal
+    .Buttons({
+      style: {
+        shape: "rect",
+        layout: "vertical",
+        color: "blue",
+        label: "pay",
+      },
+
+      createOrder: function (data, actions) {
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              value: '{{ cart_total }}',
+            },
+          }]
+        });
+      },
+      onApprove: function (data, actions) {
+        return actions.order.capture().then(function(orderData){
+          console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+          var transaction = orderData.purchase_units[0].payments.captures[0];
+          alert('Transaction ' + transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+        });
+      },
+    })
+    .render("#paypal-button-container");
+
+</script>
 
 {% endblock %}

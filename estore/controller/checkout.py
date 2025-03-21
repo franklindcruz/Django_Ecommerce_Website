@@ -25,9 +25,9 @@ def checkout_view(request):
         'cart_items': cart_items,
         'cart_total': cart_total,
         'user_profile': user_profile,
-        'razorpay_key': settings.RAZORPAY_KEY
+        'razorpay_key': settings.RAZORPAY_KEY_ID
     }
-    print(settings.RAZORPAY_KEY)
+    print(settings.RAZORPAY_KEY_ID)
     return render(request, 'estore/checkout.html', context)
 
 
