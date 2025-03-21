@@ -122,6 +122,18 @@
   <!-- messages setup -->
   <script src="{% static 'js/messages.js' %}"></script>
 
+
+  <!-- alertify js -->
+  <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/alertify.min.js"></script>
+
+  <script>
+    alertify.set('notifier', 'position', 'bottom-right');
+    {% for message in messages %}
+    alertify["{{ message.tags }}"]("{{ message }}");
+    {% endfor %}
+  </script>
+
+
   {% block scripts %} {% endblock %}
 </body>
 
